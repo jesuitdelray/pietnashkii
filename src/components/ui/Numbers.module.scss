@@ -4,6 +4,9 @@
     background-color: white;
     border-radius: 15px;
     color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .numbers {
@@ -12,16 +15,38 @@
 }
 
 .number {
-    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 50px;
     height: 50px;
     text-align: center;
     justify-content: center;
     border: 0px solid black;
     box-shadow: 0 2px 2px black;
     border-radius: 15px;
+    gap: 20px;
     cursor: pointer;
 }
 
 .number:hover {
     background-color: whitesmoke;
+}
+
+.number:active {
+    background-color: darkcyan;
+}
+
+.button {
+    margin-top: 50px;
+    background-color: rgb(51, 75, 76);
+    border: none;
+    width: 100px;
+}
+
+.button:hover {
+    background-color: darkcyan;
+    width: 105px;
+    height: +10%;
 }
