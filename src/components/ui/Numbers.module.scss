@@ -2,55 +2,46 @@
     width: 700px;
     height: 400px;
     background-color: white;
-    border-radius: 15px;
     color: black;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.numbers {
+.numbersBlock {
     display: grid;
     grid-template: 1fr 1fr / repeat(5, 1fr);
 }
 
-.number {
+.numberFalse {
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 10px;
+    justify-content: center;
     width: 50px;
     height: 50px;
-    text-align: center;
-    justify-content: center;
-    border: 0px solid black;
-    box-shadow: 0 2px 2px black;
-    border-radius: 15px;
-    gap: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 1px 1px 0 black;
     cursor: pointer;
 }
 
-.number:hover {
-    background-color: whitesmoke;
+.numberFalse:hover {
+    background-color: rgb(203, 243, 230);
 }
 
-.number:active {
-    background-color: darkcyan;
-}
-
-.number.selected {
-    background-color: lightgreen;
+.numberTrue {
+    background-color: pink;
 }
 
 .button {
-    margin-top: 50px;
-    background-color: rgb(51, 75, 76);
-    border: none;
-    width: 100px;
+    margin-top: 30px;
+    color: rgb(12, 146, 103);
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 1px 1px 0 black;
 }
 
 .button:hover {
-    background-color: darkcyan;
-    width: 105px;
-    height: +10%;
+    background-color: rgb(175, 241, 220);
 }

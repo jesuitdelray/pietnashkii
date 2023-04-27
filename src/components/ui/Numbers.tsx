@@ -1,74 +1,66 @@
-import { classNames } from "../../lib/classNames"
-import { getRandomNumbers } from "../../lib/getRandomNumbers"
 import styles from "./Numbers.module.scss"
-import { useState, useEffect } from "react"
+import getRandomNumbers from "../../lib/getRandomNumbers"
+import { useEffect, useState } from "react"
 
-interface numbersProps {
-    numbers: any
-    length: any
-    push: any
-    clicked: any
+interface numbersHolderProps {
+    numbersHolder: any
+    index: any
 }
 
-function Numbers() {
-    const [numbers, setNumbers] = useState<number[]>(getRandomNumbers(10))
-    const [selected, setSelected] = useState([])
-    const [win, setWin] = useState(false)
+interface renderingNotTrueProps {
+    index: boolean
+}
 
-    useEffect(() => {
-        const allTheSame = numbers.filter(item => numbers[0] === item).length === 10 //
+interface trueNumbersHolderProps {
+    trueNumbersHolder: any
+}
+// const [currentNumbers, setCurrentNumbers] = useState(getRandomNumbers(10))
 
-        if (allTheSame) {
-            setWin(true)
-        }
-    }, [selected])
+// function renderingNotTrue() {}
 
-    function generateNumbers() {
-        setWin(false)
+function randomNumbersRender() {
+    const [numbersHolder]: any = []
+    const [clickedNumber, setClickedNumber] = useState<number[]>([])
+    const [numberStyle, setNumberStyle] = useState(styles.number)
 
-        setNumbers(prev =>
-            prev.map((item, index) => {
-                if (!selected.includes(index)) {
-                    return getRandomNumbers(1)[0] //
-                }
-                return prev[index]
-            })
+    // useEffect(() => {
+    //     if () {
+    //     }
+    // }, [clickedNumber])
+    function toggleButton() {
+        return setClickedNumber(numberIndex =>
+            numbersHolder.includes(numberIndex)
+                ? numberIndex.pop() && setNumberStyle(styles.numberFalse)
+                : numbersHolder.push(numberIndex) && setNumberStyle(styles.numberTrue)
         )
     }
 
-    function toggleSelection(index: number) {
-        setSelected(prev => {
-            return prev.includes(index)
-                ? [...prev.filter(item => item !== index)]
-                : [...prev, index]
-        })
-    }
+    return (
+        <div className={styles.numbersBlock}>
+            {getRandomNumbers(10).map(
+                (item, index) =>
+                    numbersHolder.push(`${index}`) && (
+                        <div
+                            className={numberStyle}
+                            onClick={() => clickedNumber.push(index) && toggleButton}
+                        >
+                            {item}
+                        </div>
+                    )
+            )}
+        </div>
+    )
+}
 
+export default function Numbers() {
     return (
         <div className={styles.wrapper}>
-            <div className={styles.container}>
-                <div className={styles.numbers}>
-                    {win ? (
-                        <div>Congratz</div>
-                    ) : (
-                        numbers.map((item, index) => (
-                            <div
-                                className={classNames(styles.number, {
-                                    [styles.selected]: selected.includes(index),
-                                })}
-                                onClick={() => toggleSelection(index)}
-                            >
-                                {item}
-                            </div>
-                        ))
-                    )}
-                </div>
-                <button className={styles.button} id="rollBtn" onClick={generateNumbers}>
+            <div className={styles.applicationBlock}>
+                {randomNumbersRender(){/* !!! */}}
+                <button className={styles.button} onClick={() => randomNumbersRender()/* !!! */}>
                     Roll
                 </button>
             </div>
         </div>
     )
 }
-
-export default Numbers
