@@ -1,66 +1,55 @@
 import styles from "./Numbers.module.scss"
+import { useState, useEffect } from "react"
 import getRandomNumbers from "../../lib/getRandomNumbers"
-import { useEffect, useState } from "react"
+import { classNames } from "../../lib/classNames"
 
-interface numbersHolderProps {
-    numbersHolder: any
-    index: any
-}
+export default function Numbers() {
+    const [isRolled, setIsRolled] = useState(getRandomNumbers(10))
+    const [isToggled, setToggled] = useState<number[]>([])
+    const [win, setWin] = useState(false)
 
-interface renderingNotTrueProps {
-    index: boolean
-}
+    useEffect(() => {
+        /*  */
+    })
 
-interface trueNumbersHolderProps {
-    trueNumbersHolder: any
-}
-// const [currentNumbers, setCurrentNumbers] = useState(getRandomNumbers(10))
+    function toggle(index: number) {
+        setToggled(prev => {
+            return prev.includes(index)
+                ? [...prev.filter(item => item !== index)]
+                : [...prev, index]
+        })
+    }
 
-// function renderingNotTrue() {}
+    function roll() {
+        setWin(false) ///
 
-function randomNumbersRender() {
-    const [numbersHolder]: any = []
-    const [clickedNumber, setClickedNumber] = useState<number[]>([])
-    const [numberStyle, setNumberStyle] = useState(styles.number)
-
-    // useEffect(() => {
-    //     if () {
-    //     }
-    // }, [clickedNumber])
-    function toggleButton() {
-        return setClickedNumber(numberIndex =>
-            numbersHolder.includes(numberIndex)
-                ? numberIndex.pop() && setNumberStyle(styles.numberFalse)
-                : numbersHolder.push(numberIndex) && setNumberStyle(styles.numberTrue)
+        setIsRolled(prev =>
+            prev.map((item, index) => {
+                if (!isToggled.includes(index)) {
+                    return getRandomNumbers(1)[0]
+                }
+                return prev[index]
+            })
         )
     }
 
     return (
-        <div className={styles.numbersBlock}>
-            {getRandomNumbers(10).map(
-                (item, index) =>
-                    numbersHolder.push(`${index}`) && (
-                        <div
-                            className={numberStyle}
-                            onClick={() => clickedNumber.push(index) && toggleButton}
-                        >
-                            {item}
-                        </div>
-                    )
-            )}
-        </div>
-    )
-}
-
-export default function Numbers() {
-    return (
         <div className={styles.wrapper}>
-            <div className={styles.applicationBlock}>
-                {randomNumbersRender(){/* !!! */}}
-                <button className={styles.button} onClick={() => randomNumbersRender()/* !!! */}>
-                    Roll
-                </button>
+            <div className={styles.numbers}>
+                {isRolled.map((number, index) => (
+                    <div
+                        className={classNames(styles.numberBtn, {
+                            [styles.numberActive]: isToggled.includes(index),
+                        })}
+                        onClick={() => toggle(index)}
+                    >
+                        {number}
+                    </div>
+                ))}
             </div>
+            <button className={styles.button} onClick={roll}>
+                Roll
+            </button>
         </div>
     )
 }

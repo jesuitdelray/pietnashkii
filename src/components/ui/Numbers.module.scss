@@ -6,14 +6,34 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
-.numbersBlock {
+.numbers {
     display: grid;
     grid-template: 1fr 1fr / repeat(5, 1fr);
 }
 
-.numberFalse {
+.numberBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 1px 1px 0 black;
+    cursor: pointer;
+}
+
+.number:hover {
+    background-color: rgb(203, 243, 230);
+}
+
+.numberActive {
+    background-color: green;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,16 +46,10 @@
     cursor: pointer;
 }
 
-.numberFalse:hover {
-    background-color: rgb(203, 243, 230);
-}
-
-.numberTrue {
-    background-color: pink;
-}
-
 .button {
     margin-top: 30px;
+    width: 100px;
+    height: 50px;
     color: rgb(12, 146, 103);
     background-color: white;
     border: 1px solid black;
