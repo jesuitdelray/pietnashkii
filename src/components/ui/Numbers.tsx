@@ -3,35 +3,41 @@ import { useState, useEffect } from "react"
 import getRandomNumbers from "../../lib/getRandomNumbers"
 import { classNames } from "../../lib/classNames"
 
+const initialRecords = localStorage.getItem("Record")
+    ? JSON.parse(localStorage.getItem("Record"))
+    : []
+
 export default function Numbers() {
     const [isRolled, setIsRolled] = useState(getRandomNumbers(10))
     const [toggled, setToggled] = useState<number[]>([])
     const [win, setWin] = useState(false) ///
     const [tries, setTries] = useState(0)
-    const [records, setRecords] = useState([])
-    const [newRecord, setNewRecord] = useState(0)
+    const [records, setRecords] = useState(initialRecords)
+
+    console.log(records, "records")
 
     useEffect(() => {
         const winningCondition =
             toggled.length === 10 && isRolled.every(item => item === isRolled[0])
-        if (winningCondition) {
-            setRecords(prev => {
-                return [...prev, tries]
-            })
-            setNewRecord(Math.min(...records))
-            console.log("win true")
-            return setWin(true)
+        if (toggled) {
+            if (winningCondition) {
+                setRecords(prev => {
+                    const newData = [...prev, tries].sort((a, b) => a - b)
+                    localStorage.setItem("Record", JSON.stringify(newData))
+                    return newData
+                })
+                console.log("win true")
+                setWin(true)
+            } else {
+                console.log("win false")
+                setWin(false)
+            }
         }
-        if (!winningCondition) {
-            console.log("win false")
-            return setWin(false)
-        }
-    })
+    }, [toggled])
 
     function resetButton() {
         setTries(0)
         setToggled([])
-
         setIsRolled(getRandomNumbers(10))
     }
 
@@ -53,7 +59,7 @@ export default function Numbers() {
             })
         )
 
-        setTries(tries + 1)
+        setTries(prev => prev + 1)
     }
     return (
         <div className={styles.wrapper}>
@@ -64,7 +70,10 @@ export default function Numbers() {
             >
                 <p>You won!</p>
                 <p>You made tries: {tries}</p>
-                <p>Your record is: {newRecord}</p>
+                Highscores:{" "}
+                {records?.slice(0, 3).map(item => (
+                    <p>{item}</p>
+                ))}
                 <button className={styles.resetButton} onClick={resetButton}>
                     Try again
                 </button>
